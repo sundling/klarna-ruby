@@ -151,7 +151,6 @@ module Klarna
         string = args.join(':')
         iso_value = self.encode(string)
 
-
         hex_md5_digest = [*::Digest::MD5.hexdigest(iso_value)].pack('H*')
         base64_digest = ::XMLRPC::Base64.encode(hex_md5_digest).strip
         hex_sha512_digest = [*Digest::SHA512.hexdigest(iso_value)].pack('H*')
@@ -171,7 +170,7 @@ module Klarna
           string.encode('utf-8', from_encoding)
         else
           ::Iconv rescue require 'iconv'
-          ::Iconv.conv(from_encoding, ::Klarna::API::PROTOCOL_ENCODING, string)
+          ::Iconv.conv('utf-8', from_encoding, string)
         end
       end
 
